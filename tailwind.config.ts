@@ -13,7 +13,8 @@ const config: Config = {
         foreground: "var(--foreground)",
       },
       container: {
-        padding: '1 rem'
+        padding: '1 rem',
+        center: true,
       },
     },
   },
