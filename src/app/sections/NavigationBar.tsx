@@ -1,6 +1,7 @@
 import logoImg from "../assets/logosaas.png";
 import Image from 'next/image';
 import MenuIcon from '../assets/menu.svg';
+import { ClerkProvider, SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
 
 
 
@@ -24,6 +25,13 @@ export const NavigationBar = () =>{
                     <a href="#" className="text-opacity-60 text-white hover:text-opacity-100 transition"> About</a>
                     <button className="bg-white py-2 px-2 rounded-lg">Get Started</button>
                 </nav>
+                <SignedOut>
+              <SignInButton />
+            </SignedOut>
+            <SignedIn>
+              <UserButton />
+            </SignedIn>
+
             </div>
         </div>
         </div>
