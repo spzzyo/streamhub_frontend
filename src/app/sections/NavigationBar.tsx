@@ -1,11 +1,15 @@
 import logoImg from "../assets/logosaas.png";
 import Image from 'next/image';
 import MenuIcon from '../assets/menu.svg';
-import { ClerkProvider, SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
+import {  SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
+import { currentUser } from '@clerk/nextjs/server'
 
 
 
-export const NavigationBar = () =>{
+
+export const NavigationBar = async () =>{
+    const user = await currentUser();
+
     return (
         <div className="bg-black">
         <div className="px-4 items-center">
@@ -17,21 +21,57 @@ export const NavigationBar = () =>{
                 <div className="border border-white border-opacity-30 h-10 w-10 inline-flex justify-center items-center rounded-lg sm:hidden">
                 <MenuIcon className="text-white"/>
                 </div>
-                <nav className="flex gap-6 items-center hidden sm:flex">
-                    <a href="#" className="text-opacity-60 text-white hover:text-opacity-100 transition"> Home</a>
-                    <a href="#" className="text-opacity-60 text-white hover:text-opacity-100 transition"> About</a>
-                    <a href="#" className="text-opacity-60 text-white hover:text-opacity-100 transition"> About</a>
-                    <a href="#" className="text-opacity-60 text-white hover:text-opacity-100 transition"> About</a>
-                    <a href="#" className="text-opacity-60 text-white hover:text-opacity-100 transition"> About</a>
-                    <button className="bg-white py-2 px-2 rounded-lg">Get Started</button>
-                </nav>
+
+                {!user && (
+        <nav className="flex gap-6 items-center hidden sm:flex">
+                    <a href="/home" className="text-opacity-60 text-white hover:text-opacity-100 transition"> Home</a>
+                    <a href="/" className="text-opacity-60 text-white hover:text-opacity-100 transition"> Dashboard </a>
+                    <a href="#" className="text-opacity-60 text-white hover:text-opacity-100 transition"> MarketPlace</a>
+                    <a href="#" className="text-opacity-60 text-white hover:text-opacity-100 transition"> NFTs</a>
+                    <a href="#" className="text-opacity-60 text-white hover:text-opacity-100 transition"> My Streams</a>
+                    {/* <button className="bg-white py-2 px-2 rounded-lg">Get Started</button> */}
+                    <div className="">
                 <SignedOut>
-              <SignInButton />
+              <div className="bg-white text-black py-2 px-4 rounded-lg hover:bg-gray-200 transition">
+                <SignInButton />
+              </div>
             </SignedOut>
-            <SignedIn>
+            <SignedIn >
               <UserButton />
             </SignedIn>
+            </div>
+                </nav>
+      )}
+      {!!user && (
+        <nav className="flex gap-6 items-center hidden sm:flex">
+        <a href="/home" className="text-opacity-60 text-white hover:text-opacity-100 transition"> Home</a>
+        <a href={`/u/${user.username}`} className="text-opacity-60 text-white hover:text-opacity-100 transition"> Dashboard </a>
+        <a href="#" className="text-opacity-60 text-white hover:text-opacity-100 transition"> MarketPlace</a>
+        <a href="#" className="text-opacity-60 text-white hover:text-opacity-100 transition"> NFTs</a>
+        <a href="#" className="text-opacity-60 text-white hover:text-opacity-100 transition"> My Streams</a>
+        {/* <button className="bg-white py-2 px-2 rounded-lg">Get Started</button> */}
+        <div className="">
+    <SignedOut>
+  <div className="bg-white text-black py-2 px-4 rounded-lg hover:bg-gray-200 transition">
+    <SignInButton />
+  </div>
+</SignedOut>
+<SignedIn >
+  <UserButton />
+</SignedIn>
+</div>
+    </nav>
+      )}
 
+
+
+
+
+
+
+
+                
+                
             </div>
         </div>
         </div>

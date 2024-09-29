@@ -14,14 +14,29 @@ datasource db {
   relationMode = "prisma"
 }
 
-
 model User {
-  id String @id @default(uuid())
-  username String @unique
-  
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  
+  username    String   @unique
+  imageUrl String @db.Text
+  externalUserId String @unique
+  walletAddress String @unique @default()
+  nonce       Int      @default(0)
+  isVerified  Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  lastLogin   DateTime?
+  // NFTs        NFT[]
 }
+
+
+// model NFT {
+//   id          String   @id @default(uuid())
+//   tokenId     String   @unique
+//   contractAddress String
+//   ownerId     String
+//   owner       User     @relation(fields: [ownerId], references: [id])
+//   createdAt   DateTime @default(now())
+//   updatedAt   DateTime @updatedAt
+// }
+
+
 
